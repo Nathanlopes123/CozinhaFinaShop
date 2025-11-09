@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CozinhaFinaShop — Panelas & Conjuntos Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f0f12;--card:#17171b;--soft:#1f1f25;--text:#f6f6f9;--muted:#b9b9c6;
+      --accent:#ff7b2e;--accent-2:#ffd166;--ok:#22c55e;--danger:#ef4444;
+      --shadow:0 10px 26px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.25)
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(1200px,100% - 2rem);margin-inline:auto}
+    header{position:sticky;top:0;z-index:50;background:rgba(15,15,18,.75);backdrop-filter: blur(10px);border-bottom:1px solid #222}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.5px}
+    .brand .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ffb36a 55%,#ffd1a1);box-shadow:var(--shadow)}
+    .brand span{font-size:1.15rem}
+    .menu{display:flex;gap:1rem;align-items:center}
+    .menu a{opacity:.9}
+    .menu a:hover{opacity:1}
+    .pill{display:flex;align-items:center;gap:.5rem;background:var(--soft);padding:.55rem .9rem;border-radius:999px;border:1px solid #2a2a31}
+    .pill input{background:transparent;border:0;outline:0;color:var(--text);min-width:160px}
+    .icon{width:22px;height:22px;display:inline-grid;place-items:center}
+    .cart-btn{position:relative;cursor:pointer}
+    .badge{position:absolute;top:-7px;right:-8px;background:var(--accent);color:white;border-radius:999px;padding:0 .38rem;font-size:.72rem;font-weight:700;border:1px solid #fff1;min-width:18px;text-align:center}
+    .cta{background:linear-gradient(135deg,var(--accent),#ff9c54);border:0;border-radius:999px;padding:.65rem 1rem;font-weight:700;box-shadow:var(--shadow);cursor:pointer}
+
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:center;padding:2rem 0}
+    .banner{background:linear-gradient(145deg,#1a1a20 0%,#131318 100%);border:1px solid #2a2a31;border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+    .banner-in{display:grid;grid-template-columns:1fr 1fr}
+    .banner-copy{padding:2rem}
+    .kicker{display:inline-flex;align-items:center;gap:.5rem;background:#15151a;border:1px solid #2a2a31;color:#ffcf99;padding:.35rem .6rem;border-radius:999px;font-size:.8rem;font-weight:700}
+    h1{margin:.7rem 0 0;font-size:clamp(1.6rem,2.3vw + 1rem,3rem);line-height:1.04}
+    .sub{color:var(--muted);margin:.7rem 0 1.2rem}
+    .timer{display:flex;gap:.6rem;align-items:center}
+    .timebox{background:#131318;border:1px solid #2a2a31;border-radius:12px;padding:.55rem .8rem;text-align:center;min-width:62px}
+    .timebox strong{font-size:1.25rem}
+    .timebox span{font-size:.75rem;color:var(--muted)}
+    .banner-art img{height:100%;object-fit:cover}
+
+    .section{padding:1.5rem 0}
+    .section h2{font-size:1.35rem;margin:0 0 .8rem}
+    .cats{display:flex;gap:.8rem;flex-wrap:wrap}
+    .chip{border:1px solid #2a2a31;background:#15151a;padding:.55rem .9rem;border-radius:999px;color:#e9e9f1;font-weight:600;cursor:pointer}
+    .chip[data-active="true"]{background:linear-gradient(135deg,#1f1f25,#2a2a31);box-shadow:inset 0 0 0 1px #3a3a47}
+
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    @media (max-width:1000px){.hero{grid-template-columns:1fr}.banner-in{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:540px){.menu .hide-sm{display:none}.grid{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border:1px solid #26262f;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .card .imgwrap{aspect-ratio:4/3;overflow:hidden}
+    .card .imgwrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+    .card:hover img{transform:scale(1.05)}
+    .card .body{padding:.9rem}
+    .price{display:flex;align-items:center;gap:.5rem;margin:.4rem 0 .8rem}
+    .old{color:#9c9cac;text-decoration:line-through}
+    .now{font-weight:800}
+    .discount{margin-left:auto;background:var(--accent-2);color:#222;padding:.18rem .4rem;border-radius:6px;font-size:.75rem;font-weight:800}
+    .actions{display:flex;gap:.5rem}
+    .btn{flex:1;display:inline-flex;align-items:center;gap:.4rem;justify-content:center;border-radius:12px;border:1px solid #2a2a31;background:#15151a;padding:.55rem .75rem;cursor:pointer;font-weight:700}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),#ff9c54);border:0}
+
+    .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;background:#131318;border:1px solid #2a2a31;border-radius:12px;padding:.7rem 1rem;font-weight:700;opacity:0;pointer-events:none;transition:opacity .3s, transform .3s;z-index:60}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px)}
+
+    /* Drawer geral */
+    .drawer{position:fixed;inset:0;display:grid;grid-template-columns:1fr min(440px,92%);visibility:hidden;z-index:55}
+    .drawer[open]{visibility:visible}
+    .backdrop{background:rgba(0,0,0,.5);backdrop-filter: blur(2px)}
+    .panel{background:var(--card);border-left:1px solid #2a2a31;padding:1rem;display:flex;flex-direction:column;gap:1rem}
+
+    /* Carrinho */
+    .panel h3{margin:0}
+    .cart-list{display:flex;flex-direction:column;gap:.7rem;max-height:48vh;overflow:auto}
+    .cart-item{display:grid;grid-template-columns:60px 1fr auto;gap:.6rem;align-items:center;border:1px solid #2a2a31;background:#15151a;border-radius:12px;padding:.5rem}
+    .qty{display:inline-flex;align-items:center;border:1px solid #2a2a31;border-radius:10px;overflow:hidden}
+    .qty button{background:#131318;border:0;width:28px;height:28px;color:var(--text);cursor:pointer}
+    .qty span{display:inline-block;width:32px;text-align:center}
+    .totals{margin-top:auto;border-top:1px dashed #2a2a31;padding-top:.7rem;display:grid;gap:.4rem}
+    .row{display:flex;justify-content:space-between;color:var(--muted)}
+    .row.total{color:var(--text);font-weight:800;font-size:1.1rem}
+
+    /* Checkout (wizard) */
+    .steps{display:flex;gap:.4rem;font-size:.82rem;color:#bfc0cf}
+    .step{display:flex;align-items:center;gap:.4rem}
+    .dot{width:8px;height:8px;border-radius:999px;background:#3a3a47}
+    .step.active .dot{background:var(--accent)}
+    .divider{flex:1;height:2px;background:#2a2a31;margin:0 .3rem;border-radius:999px}
+    form label{display:block;font-size:.85rem;color:#b9b9c6;margin:.4rem 0 .2rem}
+    form input, form select{width:100%;background:#101015;border:1px solid #2a2a31;color:var(--text);border-radius:10px;padding:.6rem .7rem}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    .grid-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:.6rem}
+    .opt{display:flex;align-items:center;gap:.6rem;padding:.6rem;border:1px solid #2a2a31;background:#15151a;border-radius:12px;cursor:pointer}
+    .opt input{margin:0}
+    .muted{color:#b9b9c6;font-size:.9rem}
+    .checkout-actions{display:flex;gap:.6rem;margin-top:.4rem}
+    .hidden{display:none}
+    .mini{font-size:.8rem;color:var(--muted)}
+
+    footer{margin-top:2rem;border-top:1px solid #23232a;background:#121216}
+    .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:1rem;padding:1.5rem 0}
+    @media (max-width:720px){.foot{grid-template-columns:1fr}}
+    .credit{color:#a6a6b5;font-size:.9rem}
+
+    /* Admin (troca de imagens) */
+    .admin-bar{position:fixed;right:16px;bottom:16px;display:flex;gap:.6rem;z-index:70}
+    .admin-bar .btn{background:#101015;border:1px solid #2a2a31}
+    .edit-note{font-size:.8rem;color:#b9b9c6;display:block}
+    .edit-controls{display:none;gap:.5rem;margin-top:.5rem}
+    .card.editing .edit-controls{display:flex}
+    input[type=file]{display:none} 
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#"><span class="logo" aria-hidden="true"></span><span>CozinhaFinaShop</span></a>
+      <div class="menu">
+        <a href="#produtos" class="hide-sm">Produtos</a>
+        <a href="#promos" class="hide-sm">Promoções</a>
+        <a href="#contato" class="hide-sm">Contato</a>
+        <label class="pill hide-sm" aria-label="Buscar produtos">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="search" placeholder="Buscar panelas, frigideiras..." />
+        </label>
+        <button id="openCart" class="pill cart-btn" title="Abrir carrinho">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6l-2-3"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+          <span id="cartBadge" class="badge">0</span>
+        </button>
+        <button class="cta hide-sm" onclick="scrollToProducts()">Ver ofertas</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="promos">
+      <div class="banner">
+        <div class="banner-in">
+          <div class="banner-copy">
+            <span class="kicker" id="kickerTxt" data-editable="hero">Oferta gourmet 🍲</span>
+            <h1 id="heroTitle" data-editable="hero">Feirão CozinhaFina — até 70% OFF</h1>
+            <img src="https://images.unsplash.com/photo-1601050690597-3e3c388bc53d?auto=format&fit=crop&w=400&q=60" alt="Promoção Black Friday" style="border-radius:12px;margin-top:.8rem;max-width:380px">
+            <p class="sub" id="heroSub" data-editable="hero">Frete grátis via Pix em compras acima de R$ 299,90. Monte seu kit premium sem estourar o orçamento!</p>
+            <div class="timer" aria-live="polite">
+              <div class="timebox"><strong id="d">00</strong><br><span>Dias</span></div>
+              <div class="timebox"><strong id="h">00</strong><br><span>Horas</span></div>
+              <div class="timebox"><strong id="m">00</strong><br><span>Min</span></div>
+              <div class="timebox"><strong id="s">00</strong><br><span>Seg</span></div>
+            </div>
+          </div>
+          <div class="banner-art">
+            <img id="heroImg" alt="Bancada de cozinha com panelas premium" src="https://picsum.photos/seed/cozinhafinashop-banner/1200/800" onerror="this.onerror=null;this.src='https://picsum.photos/seed/fallback-hero/1200/800'">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section">
+          <h2>Categorias</h2>
+          <div class="cats" id="cats"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="produtos">
+      <h2>Produtos em destaque</h2>
+      <div class="grid" id="grid"></div>
+    </section>
+    <p class="edit-note">Dica: ative "Editar imagens" para subir fotos reais dos produtos do seu computador/celular. As imagens ficam salvas só no seu navegador (localStorage).</p>
+  </main>
+
+  <div class="toast" id="toast">Pronto!</div>
+
+  <!-- Admin floating bar -->
+  <div class="admin-bar">
+    <button class="btn" id="toggleEdit">Editar imagens</button>
+    <button class="btn" id="toggleHero">Editar vitrine</button>
+    <button class="btn" id="heroImgBtn">Trocar foto da vitrine</button>
+    <button class="btn" id="editProducts">Editar produtos</button>
+    <button class="btn" id="addProduct">Novo produto</button>
+    <button class="btn" id="clearImages">Limpar imagens</button>
+  </div>
+
+  <!-- Modal novo produto -->
+  <div id="productModal" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.5);z-index:80">
+    <div style="background:#15151a;border:1px solid #2a2a31;border-radius:14px;padding:1rem;min-width:min(520px,92%);box-shadow:var(--shadow)">
+      <h3 style="margin-top:0">Adicionar produto</h3>
+      <div class="grid-2">
+        <input id="np_name" placeholder="Nome do produto">
+        <input id="np_cat" placeholder="Categoria (ex.: Conjuntos)">
+      </div>
+      <div class="grid-3" style="margin-top:.6rem">
+        <input id="np_price" inputmode="decimal" placeholder="Preço (ex.: 699.90)">
+        <input id="np_old" inputmode="decimal" placeholder="De (ex.: 899.90)">
+        <input id="np_img" placeholder="URL da imagem (opcional)">
+      </div>
+      <div style="margin:.6rem 0">
+        <label class="btn"><input type="file" id="np_file" accept="image/*">Enviar imagem</label>
+      </div>
+      <div style="display:flex;gap:.6rem;justify-content:flex-end">
+        <button class="btn" id="np_cancel">Cancelar</button>
+        <button class="btn primary" id="np_save">Salvar</button>
+      </div>
+      <p class="mini">Se enviar arquivo, ele tem prioridade sobre o URL. As imagens ficam no seu navegador.</p>
+    </div>
+  </div>
+
+  <!-- Modal Foto da Vitrine -->
+  <div id="heroImgModal" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.5);z-index:80">
+    <div style="background:#15151a;border:1px solid #2a2a31;border-radius:14px;padding:1rem;min-width:min(520px,92%);box-shadow:var(--shadow)">
+      <h3 style="margin-top:0">Trocar foto da vitrine</h3>
+      <input id="hi_url" placeholder="URL da imagem (opcional)">
+      <div style="margin:.6rem 0">
+        <label class="btn"><input type="file" id="hi_file" accept="image/*">Enviar imagem</label>
+        <button class="btn" id="hi_reset" style="margin-left:.4rem">Voltar padrão</button>
+      </div>
+      <div style="display:flex;gap:.6rem;justify-content:flex-end">
+        <button class="btn" id="hi_cancel">Cancelar</button>
+        <button class="btn primary" id="hi_save">Salvar</button>
+      </div>
+      <p class="mini">Se enviar arquivo, ele tem prioridade sobre o URL. A imagem fica salva no seu navegador.</p>
+    </div>
+  </div>
+
+  <!-- Botão excluir dentro do modal (aparece só em modo edição) -->
+  <div id="np_delete_wrap" style="display:none;position:fixed;right:22px;bottom:22px;z-index:85">
+    <button class="btn" id="np_delete" style="background:#2a1111;border-color:#3a1a1a">Excluir produto</button>
+  </div>
+
+  <!-- Drawer: Carrinho + Checkout Wizard -->
+  <section class="drawer" id="drawer" aria-hidden="true" aria-label="Carrinho de compras e Checkout">
+    <div class="backdrop" onclick="toggleCart(false)"></div>
+    <aside class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 id="drawerTitle">Seu carrinho</h3>
+        <button class="btn" onclick="toggleCart(false)" aria-label="Fechar">Fechar</button>
+      </div>
+
+      <!-- LISTA CARRINHO -->
+      <div id="cartView">
+        <div id="cartList" class="cart-list"></div>
+        <div class="totals">
+          <div class="row"><span>Subtotal</span><strong id="sub">R$ 0,00</strong></div>
+          <div class="row"><span>Desconto relâmpago</span><strong id="disc">- R$ 0,00</strong></div>
+          <div class="row total"><span>Total</span><strong id="tot">R$ 0,00</strong></div>
+        </div>
+        <div class="checkout-actions">
+          <button class="btn primary" onclick="startCheckout()">Ir para o checkout</button>
+        </div>
+        <div class="mini">Compra segura • Política de devolução em 7 dias • Suporte WhatsApp</div>
+      </div>
+
+      <!-- CHECKOUT WIZARD -->
+      <div id="wizard" class="hidden">
+        <div class="steps" style="margin-bottom:.6rem">
+          <div class="step" id="st1"><span class="dot"></span> Endereço</div>
+          <div class="divider"></div>
+          <div class="step" id="st2"><span class="dot"></span> Pagamento</div>
+          <div class="divider"></div>
+          <div class="step" id="st3"><span class="dot"></span> Frete</div>
+        </div>
+
+        <!-- STEP 1: ENDEREÇO -->
+        <form id="step1">
+          <label>CEP</label>
+          <div class="grid-3">
+            <input id="cep" placeholder="00000-000" inputmode="numeric" maxlength="9">
+            <input id="estado" placeholder="UF" maxlength="2">
+            <input id="cidade" placeholder="Cidade">
+          </div>
+          <label>Rua</label>
+          <input id="rua" placeholder="Ex.: Av. das Nações">
+          <div class="grid-2">
+            <div>
+              <label>Número</label>
+              <input id="numero" placeholder="123">
+            </div>
+            <div>
+              <label>Complemento</label>
+              <input id="comp" placeholder="Apto / Referência (opcional)">
+            </div>
+          </div>
+          <div class="checkout-actions">
+            <button type="button" class="btn" onclick="backToCart()">Voltar</button>
+            <button type="button" class="btn primary" onclick="goPayment()">Continuar para pagamento</button>
+          </div>
+          <p class="mini">Assim que salvar o endereço, você vai direto para a forma de pagamento, e depois escolhe o frete.</p>
+        </form>
+
+        <!-- STEP 2: PAGAMENTO -->
+        <div id="step2" class="hidden">
+          <label class="muted">Selecione a forma de pagamento</label>
+          <label class="opt"><input type="radio" name="pay" value="pix" checked> Pix (recomendado)
+            <span class="mini" style="margin-left:auto">5% OFF</span>
+          </label>
+          <label class="opt"><input type="radio" name="pay" value="credito"> Cartão de crédito</label>
+          <div id="cardForm" class="hidden" style="margin-top:.6rem">
+            <div class="grid-2">
+              <input id="ccnum" placeholder="Número do cartão">
+              <input id="ccname" placeholder="Nome impresso">
+            </div>
+            <div class="grid-3" style="margin-top:.6rem">
+              <input id="ccvalid" placeholder="MM/AA" maxlength="5">
+              <input id="cccvv" placeholder="CVV" maxlength="4">
+              <select id="ccinst">
+                <option value="1">1x</option>
+                <option value="2">2x</option>
+                <option value="3">3x</option>
+                <option value="4">4x</option>
+              </select>
+            </div>
+          </div>
+          <div class="checkout-actions">
+            <button class="btn" onclick="goAddress()">Voltar</button>
+            <button class="btn primary" onclick="goShipping()">Continuar para frete</button>
+          </div>
+          <p class="mini">Pix gera QR Code na confirmação. Cartão é simulado (teste).</p>
+        </div>
+
+        <!-- STEP 3: FRETE -->
+        <div id="step3" class="hidden">
+          <label class="muted">Escolha o frete</label>
+          <label class="opt"><input type="radio" name="ship" value="pac" checked> PAC — até 8 dias úteis <span style="margin-left:auto">R$ <span id="pacPrice">29,90</span></span></label>
+          <label class="opt"><input type="radio" name="ship" value="sedex"> SEDEX — 1 a 3 dias úteis <span style="margin-left:auto">R$ <span id="sedexPrice">39,90</span></span></label>
+          <label class="opt"><input type="radio" name="ship" value="retirada"> Retirar na loja <span class="mini" style="margin-left:auto">Grátis</span></label>
+          <div class="checkout-actions">
+            <button class="btn" onclick="goPayment()">Voltar</button>
+            <button class="btn primary" onclick="confirmOrder()">Confirmar pedido</button>
+          </div>
+          <p class="mini">Valores de frete meramente ilustrativos.</p>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer id="contato">
+    <div class="container foot">
+      <div>
+        <h3>CozinhaFinaShop</h3>
+        <p class="credit">Panelas premium • Frigideiras • Conjuntos. CNPJ 00.000.000/0001-00 (exemplo). Atendimento: Seg–Sex, 9h–18h.</p>
+      </div>
+      <div>
+        <h4>Ajuda</h4>
+        <ul style="margin:0;padding:0;list-style:none;color:#c8c8d6">
+          <li><a href="#" onclick="alert('Política de frete (exemplo)')">Frete e prazos</a></li>
+          <li><a href="#" onclick="alert('Trocas e devoluções (exemplo)')">Trocas e devoluções</a></li>
+          <li><a href="#" onclick="alert('Privacidade (exemplo)')">Privacidade</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <p class="credit">WhatsApp: (11) 99999-0000<br>E-mail: contato@cozinhafinashop.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===================== DADOS =====================
+    const PRODUCTS = [
+      {id:'a1', name:'Panela Antiaderente 28cm c/ Tampa de Vidro', price:329.9, old:499.9, cat:'Panelas Antiaderentes', img:'https://picsum.photos/seed/panela28/800/600'},
+      {id:'a2', name:'Frigideira Antiaderente 30cm Fundo Triplo', price:259.9, old:349.9, cat:'Caçarolas & Frigideiras', img:'https://picsum.photos/seed/frigideira30/800/600'},
+      {id:'a3', name:'Wok Antiaderente 32cm', price:289.9, old:399.9, cat:'Caçarolas & Frigideiras', img:'https://picsum.photos/seed/wok32/800/600'},
+      {id:'p1', name:'Panela de Pressão Inox 4,5L', price:299.9, old:429.9, cat:'Panelas de Pressão', img:'https://picsum.photos/seed/pressao45/800/600'},
+      {id:'p2', name:'Panela de Pressão 7L Fechamento Interno', price:389.9, old:549.9, cat:'Panelas de Pressão', img:'https://picsum.photos/seed/pressao70/800/600'},
+      {id:'c1', name:'Caçarola Alumínio Fundido 24cm', price:279.9, old:399.9, cat:'Caçarolas & Frigideiras', img:'https://picsum.photos/seed/cacarola24/800/600'},
+      {id:'g1', name:'Grill Estriado 28cm (Frigideira)', price:239.9, old:329.9, cat:'Caçarolas & Frigideiras', img:'https://picsum.photos/seed/grill28/800/600'},
+      {id:'s1', name:'Conjunto 5 Peças Antiaderente (Panela + Frigideira)', price:699.9, old:899.9, cat:'Conjuntos', img:'https://picsum.photos/seed/set5anti/800/600'},
+      {id:'s2', name:'Conjunto Inox 6 Peças c/ Tampas', price:899.9, old:1199.9, cat:'Conjuntos', img:'https://picsum.photos/seed/set6inox/800/600'},
+      {id:'u1', name:'Conjunto Utensílios Silicone 10 Peças', price:179.9, old:249.9, cat:'Conjuntos', img:'https://picsum.photos/seed/silicone10/800/600'}
+    ];
+
+    // Produto enviado pelo usuário (Tramontina Paris)
+    PRODUCTS.unshift({id:'ta1', name:'Caçarola Tramontina Paris Antiaderente Starflon Max Vermelho 18cm - 28cm', price:139.99, old:249.99, cat:'Panelas Antiaderentes', img:'transferir.jpg', custom:true});
+
+    // ===================== ESTADO & UTILS =====================
+    const state = {
+      cart: JSON.parse(localStorage.getItem('cart_cozinhafina')||'[]'),
+      category: 'Todas',
+      deadline: Date.now() + 1000*60*60*48, // 48h
+      allowEdit: true,              // edição habilitada
+      checkoutStep: 1,
+      address: JSON.parse(localStorage.getItem('addr_cozinhafina')||'{}')
+    };
+    const fmt = (n)=> n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+    const el = (sel)=> document.querySelector(sel);
+
+    // ===================== CATEGORIAS =====================
+    const CATS = ['Todas','Panelas Antiaderentes','Panelas de Pressão','Caçarolas & Frigideiras','Conjuntos'];
+    function renderCats(){
+      const wrap = el('#cats'); wrap.innerHTML = '';
+      CATS.forEach(c=>{
+        const b = document.createElement('button');
+        b.className='chip'; b.textContent=c; b.dataset.active = c===state.category;
+        b.onclick = ()=>{ state.category=c; renderGrid(); highlightCat(); };
+        wrap.appendChild(b);
+      });
+    }
+    function highlightCat(){
+      document.querySelectorAll('.chip').forEach(b=> b.dataset.active = (b.textContent===state.category));
+    }
+
+    // ===================== GRID =====================
+    function productCard(p){
+      const discount = Math.round((1 - p.price/p.old)*100);
+      const stored = localStorage.getItem('img_'+p.id);
+      const src = stored || p.img;
+      return `
+      <article class="card" data-cat="${p.cat}" data-name="${p.name.toLowerCase()}" data-id="${p.id}">
+        <div class="imgwrap"><img alt="${p.name}" src="${src}" id="img_${p.id}" onerror="this.onerror=null; this.src='https://picsum.photos/seed/fallbackpanela/800/600'"></div>
+        <div class="body">
+          <strong>${p.name}</strong>
+          <div class="price"><span class="old">${fmt(p.old)}</span><span class="now">${fmt(p.price)}</span><span class="discount">-${discount}%</span></div>
+          <div class="actions">
+            <button class="btn" onclick='addToCart("${p.id}",1)'>Adicionar</button>
+            <button class="btn primary" onclick='buyNow("${p.id}")'>Comprar</button>
+          </div>
+          <div class="edit-controls" ${!state.allowEdit? 'style="display:none"':''}>
+            <label class="btn"><input type="file" accept="image/*" onchange="loadImage(event, '${p.id}')">Trocar imagem</label>
+            <button class="btn" onclick="resetImage('${p.id}')">Voltar padrão</button>
+          </div>
+        </div>
+      </article>`;
+    }
+
+    function renderGrid(){
+      const term = (el('#search')?.value||'').toLowerCase();
+      const list = PRODUCTS.filter(p=> (state.category==='Todas'||p.cat===state.category) && p.name.toLowerCase().includes(term));
+      el('#grid').innerHTML = list.map(productCard).join('');
+      if(editMode && state.allowEdit){ document.querySelectorAll('.card').forEach(c=> c.classList.add('editing')); }
+      document.querySelector('.admin-bar').style.display = state.allowEdit ? 'flex' : 'none';
+      const note = document.querySelector('.edit-note'); if(note) note.style.display = state.allowEdit ? 'block' : 'none';
+      // injeta controles de edição de produto quando ativo
+      if(prodEdit){
+        document.querySelectorAll('#grid .card .body').forEach(b=>{
+          if(b.querySelector('.edit-prod-controls')) return;
+          const id = b.closest('.card').dataset.id;
+          const wrap = document.createElement('div');
+          wrap.className = 'edit-controls edit-prod-controls';
+          wrap.style.display = 'flex';
+          wrap.innerHTML = `<button class='btn' onclick="openEdit('${id}')">Editar dados</button>
+                            <button class='btn' onclick="removeProduct('${id}')">Excluir</button>`;
+          b.appendChild(wrap);
+        });
+      } else {
+        document.querySelectorAll('.edit-prod-controls').forEach(n=> n.remove());
+      }
+    }
+    document.addEventListener('input', (e)=>{ if(e.target && e.target.id==='search') renderGrid(); });
+
+    // ===================== CARRINHO =====================
+    function persist(){ localStorage.setItem('cart_cozinhafina', JSON.stringify(state.cart)); }
+    function cartCount(){ return state.cart.reduce((s,i)=> s+i.qty, 0); }
+    function addToCart(id, qty=1){ const it = state.cart.find(i=> i.id===id); if(it) it.qty += qty; else state.cart.push({id, qty}); persist(); toast('Adicionado ao carrinho'); updateCartBadge(); renderCart(); }
+    function buyNow(id){ addToCart(id,1); toggleCart(true); }
+    function updateCartBadge(){ el('#cartBadge').textContent = cartCount(); }
+
+    function line(p, it){
+      return `
+      <div class="cart-item">
+        <img alt="${p.name}" src="${localStorage.getItem('img_'+p.id)||p.img}" style="border-radius:8px;height:60px;object-fit:cover">
+        <div><div style="font-weight:700">${p.name}</div><div style="color:#b9b9c6">${fmt(p.price)} cada</div></div>
+        <div style="display:grid;gap:.4rem;justify-items:end">
+          <div class="qty">
+            <button onclick='chgQty("${it.id}",-1)' aria-label="Diminuir">-</button>
+            <span>${it.qty}</span>
+            <button onclick='chgQty("${it.id}",1)' aria-label="Aumentar">+</button>
+          </div>
+          <button class="btn" onclick='rem("${it.id}")' aria-label="Remover">Remover</button>
+        </div>
+      </div>`;
+    }
+
+    function chgQty(id, delta){ const it = state.cart.find(i=> i.id===id); if(!it) return; it.qty += delta; if(it.qty<=0) state.cart = state.cart.filter(i=> i.id!==id); persist(); renderCart(); updateCartBadge(); }
+    function rem(id){ state.cart = state.cart.filter(i=> i.id!==id); persist(); renderCart(); updateCartBadge(); }
+
+    function totals(){
+      const promoActive = Date.now() < state.deadline;
+      let sub=0; state.cart.forEach(it=>{ const p = PRODUCTS.find(x=> x.id===it.id); sub += p.price*it.qty; });
+      const discount = promoActive ? Math.min(sub*0.12, 120) : 0; // desconto melhor p/ ticket alto
+      return {sub,discount,total: Math.max(0, sub-discount), promoActive};
+    }
+    function renderCart(){
+      const list = el('#cartList');
+      if(state.cart.length===0){ list.innerHTML = '<p style="color:#b9b9c6">Seu carrinho está vazio.</p>'; }
+      else { list.innerHTML = state.cart.map(it=> line(PRODUCTS.find(p=> p.id===it.id), it)).join(''); }
+      const t = totals(); el('#sub').textContent = fmt(t.sub); el('#disc').textContent = `- ${fmt(t.discount)}`; el('#tot').textContent = fmt(t.total);
+    }
+    function toggleCart(open){
+      const dr = el('#drawer');
+      if(open){ dr.setAttribute('open',''); dr.setAttribute('aria-hidden','false'); }
+      else { dr.removeAttribute('open'); dr.setAttribute('aria-hidden','true'); showCartView(); }
+    }
+    document.getElementById('openCart').addEventListener('click', ()=> toggleCart(true));
+
+    function toast(msg){ const t = el('#toast'); t.textContent = msg; t.classList.add('show'); setTimeout(()=> t.classList.remove('show'), 1700); }
+
+    // ===================== TIMER =====================
+    function tick(){
+      const now = Date.now(); const ms = Math.max(0, state.deadline - now);
+      const s = Math.floor(ms/1000)%60; const m = Math.floor(ms/1000/60)%60; const h = Math.floor(ms/1000/60/60)%24; const d = Math.floor(ms/1000/60/60/24);
+      el('#d').textContent = String(d).padStart(2,'0');
+      el('#h').textContent = String(h).padStart(2,'0');
+      el('#m').textContent = String(m).padStart(2,'0');
+      el('#s').textContent = String(s).padStart(2,'0');
+    }
+    setInterval(tick, 1000); tick();
+
+    // ===================== EDITOR DE IMAGENS =====================
+    let editMode = false;
+    // modo de edição de dados de produtos
+    let prodEdit = false;
+    function setProdEdit(on){
+      prodEdit = on;
+      const btn = document.getElementById('editProducts');
+      if(btn) btn.textContent = on ? 'Sair do modo produto' : 'Editar produtos';
+      renderGrid();
+      toast(on? 'Edição de nomes/preços ativada' : 'Edição de nomes/preços desativada');
+    }
+    function setEditMode(on){
+      if(!state.allowEdit){ toast('Edição desativada'); return; }
+      editMode = on;
+      document.querySelectorAll('.card').forEach(c=> c.classList.toggle('editing', editMode));
+      const btn = el('#toggleEdit');
+      if(btn){ btn.textContent = editMode ? 'Sair do modo edição' : 'Editar imagens'; }
+      toast(editMode ? 'Modo edição ativado: clique em "Trocar imagem"' : 'Modo edição desativado');
+    }
+    window.loadImage = function(event, id){
+      if(!state.allowEdit) return;
+      const file = event?.target?.files?.[0]; if(!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e){
+        const dataUrl = e.target.result;
+        try{ localStorage.setItem('img_'+id, dataUrl); }catch(err){ console.warn('Falha ao salvar no localStorage (tamanho?):', err); }
+        const imgEl = document.getElementById('img_'+id); if(imgEl) imgEl.src = dataUrl;
+        toast('Imagem atualizada!');
+      };
+      reader.readAsDataURL(file);
+    }
+    window.resetImage = function(id){
+      if(!state.allowEdit) return;
+      localStorage.removeItem('img_'+id);
+      const p = PRODUCTS.find(x=> x.id===id);
+      const imgEl = document.getElementById('img_'+id);
+      if(p && imgEl) imgEl.src = p.img;
+      toast('Imagem padrão restaurada');
+    }
+    document.getElementById('toggleEdit').addEventListener('click', ()=> setEditMode(!editMode));
+    document.getElementById('clearImages').addEventListener('click', ()=>{
+      if(!state.allowEdit){ toast('Edição desativada'); return; }
+      Object.keys(localStorage).filter(k=>k.startsWith('img_')).forEach(k=> localStorage.removeItem(k));
+      renderGrid(); toast('Todas as imagens personalizadas foram limpas');
+    });
+
+    // ===================== CHECKOUT WIZARD =====================
+    function startCheckout(){
+      if(!state.cart.length){ toast('Adicione itens antes de pagar'); return; }
+      el('#drawerTitle').textContent = 'Checkout';
+      el('#cartView').classList.add('hidden');
+      el('#wizard').classList.remove('hidden');
+      state.checkoutStep = 1; setStep(1); preloadAddress();
+    }
+    function backToCart(){ showCartView(); }
+    function showCartView(){
+      el('#drawerTitle').textContent = 'Seu carrinho';
+      el('#wizard').classList.add('hidden');
+      el('#cartView').classList.remove('hidden');
+    }
+
+    function setStep(n){
+      [1,2,3].forEach(i=> el('#st'+i).classList.toggle('active', i===n));
+      state.checkoutStep = n;
+      el('#step1').classList.toggle('hidden', n!==1);
+      el('#step2').classList.toggle('hidden', n!==2);
+      el('#step3').classList.toggle('hidden', n!==3);
+    }
+
+    function goPayment(){
+      if(state.checkoutStep===1){
+        const addr = collectAddress();
+        if(!addr){ toast('Preencha CEP, Rua e Número'); return; }
+        state.address = addr;
+        localStorage.setItem('addr_cozinhafina', JSON.stringify(addr));
+      }
+      setStep(2);
+    }
+    function goAddress(){ setStep(1); }
+    function goShipping(){
+      const pay = document.querySelector('input[name="pay"]:checked')?.value || 'pix';
+      if(pay==='credito'){ el('#cardForm').classList.remove('hidden'); }
+      else { el('#cardForm').classList.add('hidden'); }
+      const t = totals();
+      const base = t.total>299.9 ? 0 : 29.9;
+      el('#pacPrice').textContent = base.toFixed(2).replace('.',',');
+      el('#sedexPrice').textContent = (base+10).toFixed(2).replace('.',',');
+      setStep(3);
+    }
+
+    function collectAddress(){
+      const cep = el('#cep').value.trim();
+      const rua = el('#rua').value.trim();
+      const numero = el('#numero').value.trim();
+      const cidade = el('#cidade').value.trim();
+      const estado = el('#estado').value.trim().toUpperCase();
+      const comp = el('#comp').value.trim();
+      if(!cep || !rua || !numero){ return null; }
+      return {cep,rua,numero,cidade,estado,comp};
+    }
+    function preloadAddress(){
+      const a = state.address; if(!a) return;
+      el('#cep').value = a.cep||''; el('#rua').value = a.rua||''; el('#numero').value = a.numero||'';
+      el('#cidade').value = a.cidade||''; el('#estado').value = a.estado||''; el('#comp').value = a.comp||'';
+    }
+
+    function confirmOrder(){
+      const pay = document.querySelector('input[name="pay"]:checked')?.value || 'pix';
+      const ship = document.querySelector('input[name="ship"]:checked')?.value || 'pac';
+      const a = state.address;
+      if(!a || !a.cep){ toast('Endereço inválido'); setStep(1); return; }
+      const t = totals();
+      let shipCost = parseFloat((ship==='retirada'?0:(ship==='sedex'? el('#sedexPrice').textContent.replace(',','.') : el('#pacPrice').textContent.replace(',','.'))));
+      const final = t.total + shipCost;
+      let msg = `Pedido criado!\n\nTotal itens: ${fmt(t.total)}\nFrete: ${fmt(shipCost)}\nTotal final: ${fmt(final)}\n\nPagamento: ${pay.toUpperCase()}\nEntrega: ${ship.toUpperCase()}\n\nEndereço: ${a.rua}, ${a.numero} ${a.comp?('- '+a.comp):''}\n${a.cidade||''} ${a.estado||''} • CEP ${a.cep}`;
+      if(pay==='pix'){ msg += `\n\n(PIX simulado) — gere o QR Code abaixo.`; showPix(); }
+      alert(msg);
+      state.cart=[]; persist(); renderCart(); updateCartBadge(); toggleCart(false);
+    }
+
+    function showPix(){ // QR ilustrativo
+      const w = window.open('', '_blank', 'width=360,height=420'); if(!w) return;
+      const t = totals();
+      w.document.write(`<div style="font-family:Arial;padding:16px;background:#0f0f12;color:#f6f6f9">
+        <h2>PIX CozinhaFinaShop</h2>
+        <p>Valor: <strong>${fmt(t.total)}</strong></p>
+        <div style="width:240px;height:240px;background:linear-gradient(135deg,#333,#666);border-radius:12px;"></div>
+        <p style="font-size:12px;color:#b9b9c6">QR Code ilustrativo.</p>
+      </div>`);
+    }
+
+    // ===================== INICIALIZAÇÃO =====================
+    function scrollToProducts(){ document.getElementById('produtos').scrollIntoView({behavior:'smooth'}); }
+    function updateUI(){ renderCats(); renderGrid(); updateCartBadge(); renderCart(); }
+    updateUI();
+
+    // sanity quick tests + extras
+    (function dev(){
+      try{
+        console.assert(typeof renderGrid==='function', 'renderGrid disponível');
+        const old = state.category;
+        state.category='Panelas de Pressão'; renderGrid();
+        const count = PRODUCTS.filter(p=>p.cat==='Panelas de Pressão').length;
+        console.assert(document.querySelectorAll('#grid .card').length===count, 'filtro de categoria funciona');
+        state.category=old; renderGrid();
+
+        const btn = document.getElementById('toggleEdit');
+        setEditMode(true);
+        if(btn){ console.assert(btn.textContent==='Sair do modo edição', 'toggle texto edição ON'); }
+        setEditMode(false);
+        if(btn){ console.assert(btn.textContent==='Editar imagens', 'toggle texto edição OFF'); }
+
+        // Teste modo edição de produtos
+        setProdEdit(true);
+        console.assert(document.querySelector('.edit-prod-controls') !== null, 'controles de edição injetados');
+        setProdEdit(false);
+        console.assert(document.querySelector('.edit-prod-controls') === null, 'controles de edição removidos');
+      }catch(e){ console.warn('Dev tests:', e); }
+    })();
+
+    // ======== HERO EDIT (contenteditable + persist) ========
+    let heroEdit = false;
+    const HERO_KEY = 'hero_cozinhafina';
+    function loadHero(){
+      try{ const data = JSON.parse(localStorage.getItem(HERO_KEY)||'{}');
+        if(data.kicker) el('#kickerTxt').innerHTML = data.kicker;
+        if(data.title) el('#heroTitle').innerHTML = data.title;
+        if(data.sub) el('#heroSub').innerHTML = data.sub;
+      }catch(_){/* noop */}
+    }
+    function setHeroEdit(on){
+      heroEdit = on;
+      ['#kickerTxt','#heroTitle','#heroSub'].forEach(sel=>{
+        const node = el(sel); if(!node) return;
+        node.contentEditable = on;
+        node.style.outline = on ? '1px dashed #3a3a47' : 'none';
+      });
+      toast(on ? 'Edição da vitrine ativada: clique e digite' : 'Edição da vitrine desativada');
+      if(!on){ saveHero(); }
+    }
+    function saveHero(){
+      const data = {
+        kicker: el('#kickerTxt')?.innerHTML||'',
+        title: el('#heroTitle')?.innerHTML||'',
+        sub: el('#heroSub')?.innerHTML||''
+      };
+      localStorage.setItem(HERO_KEY, JSON.stringify(data));
+    }
+    loadHero();
+
+    // ======== HERO IMAGE (upload/URL + persist) ========
+    const HERO_IMG_KEY = 'hero_img_src';
+    const heroImgEl = ()=> document.getElementById('heroImg');
+    function loadHeroImg(){
+      try{ const src = localStorage.getItem(HERO_IMG_KEY); if(src){ heroImgEl().src = src; } }catch(_){/* noop */}
+    }
+    async function saveHeroImg(){
+      let src = document.getElementById('hi_url').value.trim();
+      const file = document.getElementById('hi_file').files[0];
+      if(file){ src = await new Promise(res=>{ const r=new FileReader(); r.onload=e=>res(e.target.result); r.readAsDataURL(file); }); }
+      if(!src){ toast('Informe um URL ou envie um arquivo'); return; }
+      try{ localStorage.setItem(HERO_IMG_KEY, src); }catch(_){/* noop */}
+      heroImgEl().src = src; toast('Foto da vitrine atualizada!'); closeHeroImgModal();
+    }
+    function resetHeroImg(){ localStorage.removeItem(HERO_IMG_KEY); heroImgEl().src='https://picsum.photos/seed/cozinhafinashop-banner/1200/800'; toast('Imagem padrão restaurada'); }
+    function openHeroImgModal(){ document.getElementById('heroImgModal').style.display='grid'; }
+    function closeHeroImgModal(){ document.getElementById('heroImgModal').style.display='none'; document.getElementById('hi_url').value=''; document.getElementById('hi_file').value=''; }
+    loadHeroImg();
+
+    // ======== CUSTOM PRODUCTS (add/edit/remove & persist) ========
+    const PROD_KEY = 'custom_products_cozinhafina';
+    function loadCustomProducts(){
+      try{
+        const arr = JSON.parse(localStorage.getItem(PROD_KEY)||'[]');
+        arr.forEach(p=> PRODUCTS.push(p));
+      }catch(_){/* noop */}
+    }
+    function saveCustomProducts(){
+      const custom = PRODUCTS.filter(p=> p.custom === true);
+      localStorage.setItem(PROD_KEY, JSON.stringify(custom));
+    }
+    loadCustomProducts();
+    renderGrid();
+
+    // Modal helpers
+    const modalEl = ()=> document.getElementById('productModal');
+    function openModal(){ modalEl().style.display='grid'; }
+    function closeModal(){ modalEl().style.display='none'; editingId=null; document.getElementById('np_delete_wrap').style.display='none'; }
+
+    // Admin bar handlers
+    let editingId = null;
+    document.getElementById('toggleHero').addEventListener('click', ()=> setHeroEdit(!heroEdit));
+    document.getElementById('heroImgBtn').addEventListener('click', openHeroImgModal);
+    document.getElementById('hi_cancel').addEventListener('click', closeHeroImgModal);
+    document.getElementById('hi_save').addEventListener('click', saveHeroImg);
+    document.getElementById('hi_reset').addEventListener('click', resetHeroImg);
+    document.getElementById('addProduct').addEventListener('click', ()=>{
+      editingId = null;
+      ['np_name','np_cat','np_price','np_old','np_img'].forEach(i=> el('#'+i).value='');
+      document.getElementById('np_file').value='';
+      document.getElementById('np_delete_wrap').style.display='none';
+      openModal();
+    });
+    document.getElementById('editProducts').addEventListener('click', ()=> setProdEdit(!prodEdit));
+    document.getElementById('np_cancel').addEventListener('click', closeModal);
+
+    // Create/Update
+    document.getElementById('np_save').addEventListener('click', async ()=>{
+      const name = el('#np_name').value.trim();
+      const cat = el('#np_cat').value.trim() || 'Conjuntos';
+      const price = parseFloat((el('#np_price').value||'0').replace(',','.'))||0;
+      const old = parseFloat((el('#np_old').value||String(price*1.2)).replace(',','.'))||price*1.2;
+      let img = el('#np_img').value.trim();
+      const file = document.getElementById('np_file').files[0];
+      if(file){ img = await new Promise((res)=>{ const r=new FileReader(); r.onload=e=>res(e.target.result); r.readAsDataURL(file); }); }
+      if(!name || !price){ toast('Preencha nome e preço'); return; }
+
+      if(editingId){
+        const p = PRODUCTS.find(x=> x.id===editingId);
+        if(p){ p.name=name; p.cat=cat; p.price=price; p.old=old; if(img) p.img=img; p.custom = p.custom || true; }
+        saveCustomProducts(); toast('Produto atualizado!');
+      } else {
+        const id = 'n'+Date.now().toString(36);
+        const p = {id,name,price,old,cat,img, custom:true};
+        PRODUCTS.push(p); saveCustomProducts(); toast('Produto adicionado!');
+      }
+      renderGrid(); closeModal();
+    });
+
+    // Edit existing
+    window.openEdit = function(id){
+      const p = PRODUCTS.find(x=> x.id===id); if(!p) return;
+      editingId = id;
+      el('#np_name').value = p.name||'';
+      el('#np_cat').value = p.cat||'';
+      el('#np_price').value = String(p.price||'');
+      el('#np_old').value = String(p.old||'');
+      el('#np_img').value = (p.img && p.img.startsWith('http')) ? p.img : '';
+      document.getElementById('np_file').value='';
+      document.getElementById('np_delete_wrap').style.display='block';
+      openModal();
+    }
+
+    // Remove
+    window.removeProduct = function(id){
+      const idx = PRODUCTS.findIndex(x=> x.id===id);
+      if(idx<0) return;
+      const p = PRODUCTS[idx];
+      if(!confirm(`Remover "${p.name}"?`)) return;
+      PRODUCTS.splice(idx,1);
+      try{ localStorage.removeItem('img_'+id); }catch(_){}
+      saveCustomProducts();
+      renderGrid();
+      toast('Produto removido');
+    }
+    document.getElementById('np_delete').addEventListener('click', ()=>{
+      if(!editingId) return; window.removeProduct(editingId); closeModal();
+    });
+
+  </script>
+</body>
+</html>
